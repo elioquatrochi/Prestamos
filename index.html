@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elton Préstamos Córdoba | Créditos Personales e Inmediatos</title>
+    <meta name="description" content="Soluciones financieras rápidas y seguras en Córdoba, Argentina. Préstamos personales con aprobación en 24 horas y tasas transparentes.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="top-bar">
+        <div class="container flex-between">
+            <span class="top-bar-text"><i class="fa-solid fa-location-dot"></i> Atención personalizada en Córdoba Capital e Interior</span>
+            <div class="top-bar-links">
+                <a href="tel:+543510000000"><i class="fa-solid fa-phone"></i> (0351) 153-000000</a>
+                <a href="https://wa.me/5493510000000" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Directo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="container flex-between">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="logo-text">Elton<span>Préstamos</span></div>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="simulador.html" class="nav-link highlight-link"><i class="fa-solid fa-calculator"></i> Simulador de Préstamos</a>
+                <a href="#como-funciona" class="nav-link">Cómo Funciona</a>
+                <a href="#ventajas" class="nav-link">Beneficios</a>
+                <a href="#requisitos" class="nav-link">Requisitos</a>
+                <a href="#testimonios" class="nav-link">Testimonios</a>
+                <a href="#preguntas-frecuentes" class="nav-link">FAQ</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+                <a href="https://wa.me/5493510000000?text=Hola!%20Quiero%20solicitar%20un%20pr%C3%A9stamo" target="_blank" class="btn btn-whatsapp-nav">
+                    <i class="fa-brands fa-whatsapp"></i> Solicitud Rápida
+                </a>
+            </nav>
+
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section con Fondo Cinemático de Imágenes en Transición Suave -->
+    <section class="hero-video-section">
+        <div class="hero-slideshow" id="heroSlideshow">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1920&auto=format&fit=crop');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1920&auto=format&fit=crop');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1920&auto=format&fit=crop');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1920&auto=format&fit=crop');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-video-content">
+            <div class="badge"><i class="fa-solid fa-shield-halved"></i> Finanzas Claras en Córdoba</div>
+            <h1 class="hero-title">Tu préstamo personal en Córdoba, <span class="highlight">sin vueltas ni letra chica</span>.</h1>
+            <p class="hero-subtitle">Conseguí hasta <strong>$5.000.000 de pesos</strong> con la mejor tasa del mercado. Aprobación crediticia en el día y acreditación inmediata en tu cuenta CBU.</p>
+            
+            <div class="hero-actions">
+                <a href="simulador.html" class="btn btn-secondary btn-lg pulse-btn"><i class="fa-solid fa-calculator"></i> Ir al Simulador de Préstamos</a>
+                <a href="https://wa.me/5493510000000?text=Hola,%20quisiera%20consultar%20por%20un%20cr%C3%A9dito" target="_blank" class="btn btn-outline-light btn-lg"><i class="fa-brands fa-whatsapp"></i> Hablar con un Asesor</a>
+            </div>
+
+            <div class="hero-stats-bar">
+                <div class="stat-box">
+                    <span class="stat-num">+12.000</span>
+                    <span class="stat-label">Cordobeses confiaron</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">24 hs</span>
+                    <span class="stat-label">Acreditación máxima</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">100%</span>
+                    <span class="stat-label">Online y seguro</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges Bar -->
+    <section class="trust-bar">
+        <div class="container trust-grid">
+            <div class="trust-item">
+                <i class="fa-solid fa-user-shield"></i>
+                <div>
+                    <h4>Datos Protegidos</h4>
+                    <p>Encriptación SSL y confidencialidad</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fa-solid fa-bolt"></i>
+                <div>
+                    <h4>Respuesta Express</h4>
+                    <p>Evaluación crediticia en 2 horas</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fa-solid fa-building-columns"></i>
+                <div>
+                    <h4>Depósito Directo</h4>
+                    <p>Transferencia a cualquier banco o CVU</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fa-solid fa-handshake"></i>
+                <div>
+                    <h4>Sin Anticipos</h4>
+                    <p>Jamás pedimos dinero por adelantado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Funciona en 3 Pasos -->
+    <section class="section bg-light" id="como-funciona">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-title">Paso a Paso</span>
+                <h2>Obtener tu préstamo nunca fue tan fácil</h2>
+                <p>En solo 3 simples pasos tenés el dinero depositado en tu cuenta bancaria.</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon"><i class="fa-solid fa-sliders"></i></div>
+                    <h3>Simulá tu Crédito</h3>
+                    <p>Ingresá al simulador interactivo, elegí el monto que necesitás y seleccioná la cantidad de cuotas a tu medida.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon"><i class="fa-solid fa-id-card"></i></div>
+                    <h3>Validá tu Identidad</h3>
+                    <p>Adjuntá una foto de tu DNI y tu recibo de sueldo o comprobante de ingresos por WhatsApp de forma 100% confidencial.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    <h3>Recibí el Dinero</h3>
+                    <p>Una vez aprobado el crédito, te transferimos los fondos inmediatamente a tu CBU o CVU en cuestión de minutos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section" id="ventajas">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-title">¿Por qué elegir Elton Préstamos?</span>
+                <h2>Diseñado para simplificar tu vida financiera</h2>
+                <p>Soluciones a la medida de trabajadores empleados, independientes y jubilados en Córdoba.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
+                    <h3>Proceso 100% Digital</h3>
+                    <p>Olvidate de las filas eternas en el centro de Córdoba. Hacé todo desde tu celular en 5 minutos.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-percent"></i></div>
+                    <h3>Cuotas Fijas en Pesos</h3>
+                    <p>Sabés exactamente cuánto vas a pagar desde el primer mes hasta el último. Sin sorpresas por inflación.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <h3>Transparencia Absoluta</h3>
+                    <p>Sin gastos ocultos de gestión. Todo se detalla con claridad en nuestro simulador interactivo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                    <h3>Atención Humana Local</h3>
+                    <p>Nuestros asesores están en Nueva Córdoba para responder tus dudas por WhatsApp al instante.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Líneas de Crédito Disponible -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-title">Soluciones a Medida</span>
+                <h2>Conocé nuestras líneas de financiamiento</h2>
+                <p>Tenemos una propuesta pensada según tu perfil de ingresos en la provincia de Córdoba.</p>
+            </div>
+
+            <div class="lines-grid">
+                <div class="line-card">
+                    <div class="line-tag">Popular</div>
+                    <i class="fa-solid fa-briefcase line-icon"></i>
+                    <h3>Empleados en Relación de Dependencia</h3>
+                    <p>Para trabajadores del sector público y privado con al menos 6 meses de antigüedad laboral.</p>
+                    <ul class="line-features">
+                        <li><i class="fa-solid fa-check"></i> Hasta $5.000.000</li>
+                        <li><i class="fa-solid fa-check"></i> Hasta 36 cuotas fijas</li>
+                        <li><i class="fa-solid fa-check"></i> Mínimos requisitos</li>
+                    </ul>
+                </div>
+
+                <div class="line-card">
+                    <div class="line-tag">Inmediato</div>
+                    <i class="fa-solid fa-user-tie line-icon"></i>
+                    <h3>Monotributistas y Autónomos</h3>
+                    <p>Para emprendedores, profesionales y comerciantes con inscripción vigente en AFIP.</p>
+                    <ul class="line-features">
+                        <li><i class="fa-solid fa-check"></i> Hasta $3.000.000</li>
+                        <li><i class="fa-solid fa-check"></i> Constancia de opción CUIT</li>
+                        <li><i class="fa-solid fa-check"></i> Aprobación ágil en el día</li>
+                    </ul>
+                </div>
+
+                <div class="line-card">
+                    <div class="line-tag">Preferencial</div>
+                    <i class="fa-solid fa-heart-pulse line-icon"></i>
+                    <h3>Jubilados y Pensionados</h3>
+                    <p>Línea especial con tasas bonificadas y cuotas acordes al recibo de haberes de ANSES o Caja de Córdoba.</p>
+                    <ul class="line-features">
+                        <li><i class="fa-solid fa-check"></i> Hasta $2.500.000</li>
+                        <li><i class="fa-solid fa-check"></i> Tasa preferencial</li>
+                        <li><i class="fa-solid fa-check"></i> Asesoramiento dedicado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requirements Section -->
+    <section class="section" id="requisitos">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-title">Requisitos Mínimos</span>
+                <h2>¿Qué necesitás para solicitarlo?</h2>
+                <p>Solo pedimos lo indispensable para validar tu identidad y otorgarte el monto.</p>
+            </div>
+
+            <div class="req-grid">
+                <div class="req-card">
+                    <div class="req-step">1</div>
+                    <i class="fa-solid fa-id-card req-icon"></i>
+                    <h3>DNI Argentino</h3>
+                    <p>Copia o foto legible de tu documento vigente.</p>
+                </div>
+                <div class="req-card">
+                    <div class="req-step">2</div>
+                    <i class="fa-solid fa-file-invoice-dollar req-icon"></i>
+                    <h3>Demostración de Ingresos</h3>
+                    <p>Recibo de sueldo, Monotributo o haber previsional.</p>
+                </div>
+                <div class="req-card">
+                    <div class="req-step">3</div>
+                    <i class="fa-solid fa-credit-card req-icon"></i>
+                    <h3>Cuenta CBU / CVU</h3>
+                    <p>Cuenta propia para la transferencia directa de los fondos.</p>
+                </div>
+                <div class="req-card">
+                    <div class="req-step">4</div>
+                    <i class="fa-solid fa-mobile-screen-button req-icon"></i>
+                    <h3>Teléfono y Email</h3>
+                    <p>Para la confirmación del otorgamiento y contrato digital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrusel de Testimonios -->
+    <section class="section bg-light" id="testimonios">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-title">Testimonios Reales</span>
+                <h2>Cordobeses que confían en Elton Préstamos</h2>
+                <p>Historias de clientes satisfechos en toda la provincia.</p>
+            </div>
+
+            <div class="testimonial-carousel-container">
+                <button class="carousel-btn prev-btn" id="prevTestimonial" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                
+                <div class="testimonial-slider" id="testimonialSlider">
+                    <div class="testimonial-card active">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Necesitaba dinero para refaccionar mi local en Barrio Jardín. En menos de 3 horas me aprobaron el crédito y me depositaron en mi cuenta de Bancor. Excelente atención!"</p>
+                        <div class="user-info">
+                            <div class="avatar">MC</div>
+                            <div><h4>Mariano Córdoba</h4><span>Comerciante • Córdoba Capital</span></div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Súper transparentes. Entré al simulador, calculé la cuota exacta y fue lo que terminé pagando. Sin gastos raros ni adelantos. Muy recomendable para monotributistas."</p>
+                        <div class="user-info">
+                            <div class="avatar">SF</div>
+                            <div><h4>Sofia Fernández</h4><span>Diseñadora Freelance • Villa Carlos Paz</span></div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Solicité mi préstamo con mi recibo de sueldo de la provincia. Todo el trámite por WhatsApp sin moverme de mi casa. La acreditación fue en el mismo día."</p>
+                        <div class="user-info">
+                            <div class="avatar">RO</div>
+                            <div><h4>Roberto Oviedo</h4><span>Empleado Público • Río Cuarto</span></div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Lo que más me gustó fue la rapidez del asesoramiento. Me sacaron todas las dudas por WhatsApp y no tuve que abonar nada por adelantado."</p>
+                        <div class="user-info">
+                            <div class="avatar">AG</div>
+                            <div><h4>Andrea Gómez</h4><span>Docente • San Francisco</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn next-btn" id="nextTestimonial" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+
+            <div class="carousel-dots" id="carouselDots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="section" id="preguntas-frecuentes">
+        <div class="container max-w-md">
+            <div class="section-header">
+                <span class="sub-title">Resolvemos tus Dudas</span>
+                <h2>Preguntas Frecuentes</h2>
+                <p>Todo lo que necesitás saber antes de solicitar tu préstamo personal.</p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>¿En cuánto tiempo se acredita el dinero?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-body">
+                        <p>Una vez aprobada tu solicitud y firmada la documentación digitalmente, el dinero se transfiere a tu CBU/CVU en un plazo de 2 a 24 horas hábiles.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>¿Cobran algún gasto de gestión o comisión por adelantado?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-body">
+                        <p><strong>Jamás.</strong> En Elton Préstamos NUNCA pedimos dinero ni transferencias por adelantado. La transparencia es nuestro pilar fundamental.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>¿Puedo solicitar un crédito si soy de una localidad del interior de Córdoba?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-body">
+                        <p>¡Sí, totalmente! Operamos de manera 100% digital en toda la provincia de Córdoba (Río Cuarto, Villa María, Carlos Paz, San Francisco, Jesús María, etc.).</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>¿Cómo abono las cuotas mensuales?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-body">
+                        <p>Podés abonar mediante débito automático en tu cuenta bancaria, o bien a través de transferencia bancaria, Rapipago o Pago Fácil antes de cada vencimiento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Location Section -->
+    <section class="section bg-dark text-white" id="contacto">
+        <div class="container contact-single-grid">
+            <div class="contact-info">
+                <span class="sub-title text-accent">Atención Presencial y Virtual</span>
+                <h2>Estamos en Córdoba para acompañarte</h2>
+                <p>Visitá nuestras oficinas comerciales en Nueva Córdoba o ponete en contacto con nuestros asesores de manera inmediata.</p>
+
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <strong>Oficinas Centrales:</strong>
+                            <p>Av. Hipólito Yrigoyen 340, Piso 4, Nueva Córdoba, Córdoba</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <div>
+                            <strong>Horario de Atención:</strong>
+                            <p>Lunes a Viernes de 09:00 a 18:00 hs</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <strong>Central Telefónica Córdoba:</strong>
+                            <p>(0351) 153-000000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 35px; text-align: center;">
+                    <a href="https://wa.me/5493510000000?text=Hola!%20Quiero%20iniciar%20una%20consulta" target="_blank" class="btn btn-whatsapp-lg">
+                        <i class="fa-brands fa-whatsapp"></i> Chatear con un Asesor por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container flex-between footer-content">
+            <div class="footer-brand">
+                <div class="logo logo-light">
+                    <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="logo-text">Elton<span>Préstamos</span></div>
+                </div>
+                <p>© 2026 Elton Préstamos - Córdoba, Argentina. Todos los derechos reservados.</p>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón de WhatsApp Flotante Fijo -->
+    <a href="https://wa.me/5493510000000?text=Hola!%20Me%20interesa%20consultar%20por%20un%20cr%C3%A9dito" target="_blank" class="floating-whatsapp" aria-label="Chat de WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
