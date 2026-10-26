@@ -1,19 +1,22 @@
-/**
- * Elton Préstamos - Script con Escala Exacta de Intereses y Cuotas
- */
-
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Slideshow Automático de Imágenes de Fondo
-    const slides = document.querySelectorAll('.hero-slideshow .slide');
-    if (slides.length > 0) {
-        let currentSlide = 0;
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 5000);
+    // 1. Toggle Modo Oscuro / Claro
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            if (themeIcon) themeIcon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            localStorage.setItem('eltonTheme', isDark ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('eltonTheme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
+        }
     }
 
     // 2. Menú móvil
@@ -23,50 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
     }
 
-    // 3. Carrusel Interactivo de Testimonios
-    const testimonials = document.querySelectorAll('.testimonial-card');
-    const dots = document.querySelectorAll('.dot');
-    const prevBtn = document.getElementById('prevTestimonial');
-    const nextBtn = document.getElementById('nextTestimonial');
-    let currentTestimonial = 0;
-
-    const showTestimonial = (index) => {
-        testimonials.forEach((card, i) => card.classList.toggle('active', i === index));
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-        currentTestimonial = index;
-    };
-
-    if (prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => showTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length));
-        nextBtn.addEventListener('click', () => showTestimonial((currentTestimonial + 1) % testimonials.length));
-        dots.forEach(dot => dot.addEventListener('click', (e) => showTestimonial(parseInt(e.target.dataset.index, 10))));
-        setInterval(() => showTestimonial((currentTestimonial + 1) % testimonials.length), 6000);
-    }
-
-    // 4. Lógica de Acordeón
-    document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', () => {
-            const item = header.parentElement;
-            const body = item.querySelector('.accordion-body');
-            const isOpen = item.classList.contains('active');
-            document.querySelectorAll('.accordion-item').forEach(i => {
-                i.classList.remove('active');
-                i.querySelector('.accordion-body').style.maxHeight = null;
-            });
-            if (!isOpen) {
-                item.classList.add('active');
-                body.style.maxHeight = body.scrollHeight + 'px';
-            }
-        });
-    });
-
-    // 5. Inicializar el Simulador Financiero con la Escala Exacta Ajustada
+    // 3. Simulador Financiero con la Escala Exacta de Cuotas (Hasta 10 cuotas máximo)
     const selMes = document.getElementById('mesInicio');
     const inputMonto = document.getElementById('monto');
     const inputCuotas = document.getElementById('cuotas');
     const inputTasa = document.getElementById('tasa');
-    const inputAnio = document.getElementById('anioInicio');
-    const btnCalcular = document.getElementById('btnCalcular');
 
     if (selMes && inputMonto && inputCuotas && inputTasa) {
         MESES.forEach((m, i) => {
@@ -77,39 +41,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         selMes.value = new Date().getMonth();
 
-        // Escala exacta de porcentajes según las cuotas elegidas
+        // Escala exacta de porcentajes confirmada por ti (Tope estricto de 10 cuotas):
         function obtenerTasaPorCuotas(cuotas) {
-            if (cuotas <= 3) return 78;      // Hasta 3 cuotas -> 78%
+            if (cuotas <= 4) return 78;      // 1 a 3 cuotas -> 78%
             if (cuotas <= 5) return 85;      // 4 a 5 cuotas -> 85%
-            if (cuotas <= 7) return 88;      // 6 a 7 cuotas -> 88% (+3%)
-            if (cuotas <= 10) return 93;     // 8 a 10 cuotas -> 93% (+1%)
-            return 95;                       // Más de 10 cuotas
+            if (cuotas <= 7) return 88;  
+            if (cuotas == 8) return 92;         // 6 a 7 cuotas -> 88% (+3%)
+            if (cuotas <= 9) return 93;
+             if (cuotas == 10) return 95;         // 8 a 10 cuotas -> 93% (+1%)
+            return 95;                       // Límite máximo
         }
 
         function actualizarSimulacionDinamica() {
+            let cuotas = parseInt(inputCuotas.value, 10) || 1;
+            // Asegurar límite estricto de 10 cuotas
+            if (cuotas > 10) {
+                cuotas = 10;
+                inputCuotas.value = 10;
+            }
+            if (cuotas < 1) {
+                cuotas = 1;
+                inputCuotas.value = 1;
+            }
+
             const monto = parseFloat(inputMonto.value) || 0;
-            const cuotas = parseInt(inputCuotas.value, 10) || 1;
-            
             const tasaCalculada = obtenerTasaPorCuotas(cuotas);
             inputTasa.value = tasaCalculada;
 
-            actualizarMesFinal();
-            renderSimuladorEscalaExacta(monto, tasaCalculada, cuotas);
+            renderSimuladorExacto(monto, tasaCalculada, cuotas);
         }
 
         ['input', 'change'].forEach(ev => {
             inputMonto.addEventListener(ev, actualizarSimulacionDinamica);
             inputCuotas.addEventListener(ev, actualizarSimulacionDinamica);
-            selMes.addEventListener(ev, actualizarMesFinal);
-            if (inputAnio) inputAnio.addEventListener(ev, actualizarMesFinal);
+            selMes.addEventListener(ev, actualizarSimulacionDinamica);
         });
-
-        if (btnCalcular) {
-            btnCalcular.addEventListener('click', actualizarSimulacionDinamica);
-        }
 
         actualizarSimulacionDinamica();
     }
+
+    // Inicializar carrusel
+    renderTestimonios();
 });
 
 function etiquetasMeses(mesInicioIdx, anioInicio, n){
@@ -122,27 +94,11 @@ function etiquetasMeses(mesInicioIdx, anioInicio, n){
     return out;
 }
 
-function actualizarMesFinal(){
-    const selMes = document.getElementById('mesInicio');
-    if(!selMes) return;
-    const mesInicioIdx = parseInt(selMes.value, 10);
-    const anioInicio = parseInt(document.getElementById('anioInicio').value, 10) || new Date().getFullYear();
-    const n = parseInt(document.getElementById('cuotas').value, 10) || 1;
-    const labels = etiquetasMeses(mesInicioIdx, anioInicio, n);
-    const mesFinalEl = document.getElementById('mesFinal');
-    if(mesFinalEl) mesFinalEl.value = labels[labels.length - 1] || '';
-}
-
 const fmt = n => '$ ' + Math.round(n).toLocaleString('es-AR');
 
-// CÁLCULO EXACTO: Total a devolver = Capital + Recargo de escala. Cuota = Total / Cuotas.
-function calcularPrestamoEscalaExacta(monto, tasaPct, n){
+function calcularPrestamoExacto(monto, tasaPct, n){
     const tasaDecimal = tasaPct / 100;
-    
-    // Total a devolver directo según la tasa fija de la escala
     const totalDevolver = monto * (1 + tasaDecimal);
-    
-    // Cuota mensual fija dividida exactamente por las cuotas pedidas
     const valorCuota = totalDevolver / n;
     
     const filas = [];
@@ -150,17 +106,13 @@ function calcularPrestamoEscalaExacta(monto, tasaPct, n){
     
     for(let k = 1; k <= n; k++){
         saldoPendiente -= valorCuota;
-        filas.push({
-            numero: k,
-            cuota: valorCuota,
-            saldoFinal: Math.max(0, saldoPendiente)
-        });
+        filas.push({ numero: k, cuota: valorCuota, saldoFinal: Math.max(0, saldoPendiente) });
     }
     
     return { cuotaFija: valorCuota, totalPagado: totalDevolver, filas };
 }
 
-function renderSimuladorEscalaExacta(montoOverride, tasaOverride, cuotasOverride){
+function renderSimuladorExacto(montoOverride, tasaOverride, cuotasOverride){
     const monto = montoOverride !== undefined ? montoOverride : (parseFloat(document.getElementById('monto').value) || 0);
     const tasa = tasaOverride !== undefined ? tasaOverride : (parseFloat(document.getElementById('tasa').value) || 78);
     const n = cuotasOverride !== undefined ? cuotasOverride : (parseInt(document.getElementById('cuotas').value, 10) || 1);
@@ -168,23 +120,22 @@ function renderSimuladorEscalaExacta(montoOverride, tasaOverride, cuotasOverride
     const selMes = document.getElementById('mesInicio');
     if(!selMes) return;
     const mesInicioIdx = parseInt(selMes.value, 10);
-    const anioInicio = parseInt(document.getElementById('anioInicio').value, 10) || new Date().getFullYear();
+    const anioInicio = new Date().getFullYear();
     const labels = etiquetasMeses(mesInicioIdx, anioInicio, n);
 
     if (monto <= 0 || n <= 0) return;
 
-    const { cuotaFija, totalPagado, filas } = calcularPrestamoEscalaExacta(monto, tasa, n);
+    const { cuotaFija, totalPagado, filas } = calcularPrestamoExacto(monto, tasa, n);
 
     const summaryEl = document.getElementById('summary');
     if(summaryEl) {
-        summaryEl.style.display = 'grid';
         summaryEl.innerHTML = `
             <div class="client-card">
                 <div class="k">Monto Solicitado</div>
                 <div class="v">${fmt(monto)}</div>
             </div>
-            <div class="client-card" style="border-left-color: var(--primary-color);">
-                <div class="k">Cuota Mensual Fija (${tasa}% Recargo)</div>
+            <div class="client-card">
+                <div class="k">Cuota Fija (${tasa}% Recargo)</div>
                 <div class="v">${fmt(cuotaFija)}</div>
             </div>
             <div class="client-card" style="border-left-color: var(--accent-color);">
@@ -196,38 +147,89 @@ function renderSimuladorEscalaExacta(montoOverride, tasaOverride, cuotasOverride
 
     const cont = document.getElementById('tablaContenedor');
     if(cont) {
-        const filasHtml = filas.map((f, idx) => {
-            return `<tr>
+        const filasHtml = filas.map((f, idx) => `
+            <tr>
                 <td>${f.numero}</td>
                 <td class="mes">${labels[idx] || ''}</td>
                 <td>${fmt(f.cuota)}</td>
                 <td>${fmt(f.saldoFinal)}</td>
-            </tr>`;
-        }).join('');
+            </tr>
+        `).join('');
 
         cont.innerHTML = `
             <table>
                 <thead>
-                    <tr>
-                        <th>Cuota #</th><th>Mes de Vencimiento</th><th>Valor de Cuota</th><th>Saldo Total Restante</th>
-                    </tr>
+                    <tr><th>Cuota #</th><th>Mes de Vencimiento</th><th>Valor de Cuota</th><th>Saldo Total Restante</th></tr>
                 </thead>
                 <tbody>${filasHtml}</tbody>
                 <tfoot>
-                    <tr>
-                        <td colspan="2" class="mes">Total a abonar al finalizar el préstamo</td>
-                        <td>${fmt(totalPagado)}</td>
-                        <td>$ 0</td>
-                    </tr>
+                    <tr><td colspan="2" class="mes">Total a abonar al finalizar</td><td>${fmt(totalPagado)}</td><td>$ 0</td></tr>
                 </tfoot>
             </table>
         `;
     }
 
-    const estado = document.getElementById('estado');
-    if(estado) {
-        estado.className = 'ok';
-        estado.style.color = '#2F6A46';
-        estado.textContent = `Cálculo exacto aplicado (${tasa}% de recargo total en ${n} cuotas).`;
+    const btnWhatsapp = document.getElementById('btnEnviarWhatsappSimulacion');
+    if (btnWhatsapp) {
+        const mensaje = `Hola! Estaba simulando en la web y quiero solicitar este préstamo:%0A- Monto: $${Math.round(monto).toLocaleString()}%0A- Cuotas: ${n}%0A- Valor por Cuota: $${Math.round(cuotaFija).toLocaleString()}%0A- Total a devolver: $${Math.round(totalPagado).toLocaleString()}`;
+        btnWhatsapp.href = `https://wa.me/5493510000000?text=${mensaje}`;
     }
+}
+
+// 4. Carrusel de Testimonios Dinámico y LocalStorage
+let testimoniosData = JSON.parse(localStorage.getItem('eltonTestimonios')) || [
+  { nombre: "Gonzalo M.", comentario: "Excelente atención por WhatsApp, me resolvieron todo en el día.", puntaje: 5 },
+  { nombre: "Mariela S.", comentario: "Muy claros los requisitos y la transferencia fue rapidísima.", puntaje: 5 },
+  { nombre: "Lucas P.", comentario: "Las cuotas son fijas y sin sorpresas. Muy recomendable.", puntaje: 4 }
+];
+
+let currentIndex = 0;
+
+function renderTestimonios() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+  
+  track.innerHTML = testimoniosData.map(t => `
+    <div class="carousel-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <strong>${t.nombre}</strong>
+        <span style="color:#f0a500;">${'⭐'.repeat(t.puntaje)}</span>
+      </div>
+      <p style="font-size:0.92rem; color:var(--text-muted);">"${t.comentario}"</p>
+    </div>
+  `).join('');
+  
+   actualizarCarruselPosicion();
+}
+
+function moverCarrusel(direccion) {
+  const totalCards = testimoniosData.length;
+  const cardsVisible = window.innerWidth > 768 ? 2 : 1;
+  const maxIndex = Math.max(0, totalCards - cardsVisible);
+  
+  currentIndex += direccion;
+  if (currentIndex < 0) currentIndex = 0;
+  if (currentIndex > maxIndex) currentIndex = maxIndex;
+  
+  actualizarCarruselPosicion();
+}
+
+function actualizarCarruselPosicion() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+  const cardWidth = track.querySelector('.carousel-card')?.offsetWidth || 300;
+  track.style.transform = `translateX(-${currentIndex * (cardWidth + 20)}px)`;
+}
+
+function agregarTestimonio(e) {
+  e.preventDefault();
+  const nombre = document.getElementById('tNombre').value.trim();
+  const puntaje = parseInt(document.getElementById('tPuntaje').value);
+  const comentario = document.getElementById('tComentario').value.trim();
+
+  testimoniosData.unshift({ nombre, puntaje, comentario });
+  localStorage.setItem('eltonTestimonios', JSON.stringify(testimoniosData));
+  document.getElementById('formTestimonio').reset();
+  currentIndex = 0;
+  renderTestimonios();
 }
