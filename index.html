@@ -35,20 +35,25 @@
         <div class="logo-text">Elton<span>Préstamos</span></div>
       </a>
       
+      <div class="nav-actions">
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambiar tema">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
+          <i class="fa-solid fa-bars" id="menuIcon"></i>
+        </button>
+      </div>
+
       <nav class="nav-menu" id="nav-menu">
+        <button class="menu-close-btn" id="menu-close-btn" aria-label="Cerrar Menú">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
         <a href="simulador.html" class="nav-link">Simulador</a>
         <a href="#como-funciona" class="nav-link">Cómo Funciona</a>
         <a href="#requisitos" class="nav-link">Requisitos</a>
         <a href="#testimonios" class="nav-link">Opiniones</a>
-
-        <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambiar tema">
-          <i class="fa-solid fa-moon" id="themeIcon"></i>
-        </button>
       </nav>
-
-      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
-        <i class="fa-solid fa-bars"></i>
-      </button>
     </div>
   </header>
 
@@ -151,7 +156,7 @@
     </div>
   </section>
 
-  <!-- SECCIÓN DE OPINIONES DE CLIENTES -->
+  <!-- OPINIONES DE CLIENTES EN CARRUSEL REESTRUCTURADO -->
   <section id="testimonios" class="section bg-light">
     <div class="container">
       <div class="section-title text-center">
@@ -159,16 +164,24 @@
         <p>Conocé la experiencia de quienes ya confiaron en nosotros</p>
       </div>
 
-      <!-- Carrusel de Testimonios -->
+      <!-- Carrusel Corregido con Espacio de Resguardo -->
       <div class="carousel-container">
-        <button class="carousel-btn prev-btn" onclick="moverCarrusel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-btn prev-btn" onclick="moverCarrusel(-1)" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
         <div class="carousel-track-wrapper">
-          <div class="carousel-track" id="carouselTrack"></div>
+          <div class="carousel-track" id="carouselTrack">
+            <!-- Rellenado por JS -->
+          </div>
         </div>
-        <button class="carousel-btn next-btn" onclick="moverCarrusel(1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <button class="carousel-btn next-btn" onclick="moverCarrusel(1)" aria-label="Siguiente">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
 
-      <!-- Formulario Ampliado para Dejar Opinión -->
+      <!-- Formulario Ampliado de Opinión -->
       <div class="add-testimonial-card-expanded">
         <h3>Dejá tu opinión sobre el servicio</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 15px;">Tu comentario ayuda a otros clientes a conocer nuestra transparencia.</p>

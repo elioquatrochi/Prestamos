@@ -18,11 +18,21 @@
         <div class="logo-text">Elton<span>Préstamos</span></div>
       </a>
       
-      <nav class="nav-menu" id="nav-menu">
-        <a href="index.html" class="nav-link"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+      <div class="nav-actions">
         <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambiar tema">
           <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
+          <i class="fa-solid fa-bars" id="menuIcon"></i>
+        </button>
+      </div>
+
+      <nav class="nav-menu" id="nav-menu">
+        <button class="menu-close-btn" id="menu-close-btn" aria-label="Cerrar Menú">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
       </nav>
     </div>
   </header>
@@ -36,7 +46,6 @@
           <p>Calculá cuotas justas y transparentes con tasas automáticas según plazos (Hasta 10 cuotas).</p>
         </div>
 
-        <!-- FORMULARIO REORGANIZADO Y ALINEADO -->
         <div class="grid-form">
           <div class="form-group">
             <label for="monto">Monto Solicitado ($ ARS)</label>

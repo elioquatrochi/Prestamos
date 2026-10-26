@@ -1,7 +1,7 @@
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Toggle Modo Oscuro / Claro
+    // 1. Modo Oscuro / Claro
     const themeToggleBtn = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
 
@@ -19,14 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Menú móvil
+    // 2. Control del Menú Móvil
     const menuToggle = document.getElementById('menu-toggle');
+    const menuCloseBtn = document.getElementById('menu-close-btn');
     const navMenu = document.getElementById('nav-menu');
+
     if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
+        menuToggle.addEventListener('click', () => navMenu.classList.add('active'));
     }
 
-    // 3. Simulador Financiero con la Escala Exacta de Cuotas (Hasta 10 cuotas máximo)
+    if (menuCloseBtn && navMenu) {
+        menuCloseBtn.addEventListener('click', () => navMenu.classList.remove('active'));
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navMenu) navMenu.classList.remove('active');
+        });
+    });
+
+    // 3. Simulador Financiero
     const selMes = document.getElementById('mesInicio');
     const inputMonto = document.getElementById('monto');
     const inputCuotas = document.getElementById('cuotas');
@@ -41,28 +53,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         selMes.value = new Date().getMonth();
 
-        // Escala exacta de porcentajes confirmada por ti (Tope estricto de 10 cuotas):
-        function obtenerTasaPorCuotas(cuotas) {
-            if (cuotas <= 4) return 78;      // 1 a 3 cuotas -> 78%
-            if (cuotas <= 5) return 85;      // 4 a 5 cuotas -> 85%
-            if (cuotas <= 7) return 88;  
-            if (cuotas == 8) return 92;         // 6 a 7 cuotas -> 88% (+3%)
-            if (cuotas <= 9) return 93;
-             if (cuotas == 10) return 95;         // 8 a 10 cuotas -> 93% (+1%)
-            return 95;                       // Límite máximo
-        }
+       // Escala exacta de porcentajes confirmada por ti (Tope estricto de 10 cuotas):
+        function obtenerTasaPorCuotas(cuotas) {
+            if (cuotas <= 4) return 78;      // 1 a 3 cuotas -> 78%
+            if (cuotas <= 5) return 85;      // 4 a 5 cuotas -> 85%
+            if (cuotas <= 7) return 88;  
+            if (cuotas == 8) return 92;         // 6 a 7 cuotas -> 88% (+3%)
+            if (cuotas <= 9) return 93;
+             if (cuotas == 10) return 95;         // 8 a 10 cuotas -> 93% (+1%)
+            return 95;                       // Límite máximo
+        }
 
         function actualizarSimulacionDinamica() {
             let cuotas = parseInt(inputCuotas.value, 10) || 1;
-            // Asegurar límite estricto de 10 cuotas
-            if (cuotas > 10) {
-                cuotas = 10;
-                inputCuotas.value = 10;
-            }
-            if (cuotas < 1) {
-                cuotas = 1;
-                inputCuotas.value = 1;
-            }
+            if (cuotas > 10) { cuotas = 10; inputCuotas.value = 10; }
+            if (cuotas < 1) { cuotas = 1; inputCuotas.value = 1; }
 
             const monto = parseFloat(inputMonto.value) || 0;
             const tasaCalculada = obtenerTasaPorCuotas(cuotas);
@@ -80,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarSimulacionDinamica();
     }
 
-    // Inicializar carrusel
     renderTestimonios();
 });
 
@@ -176,11 +180,11 @@ function renderSimuladorExacto(montoOverride, tasaOverride, cuotasOverride){
     }
 }
 
-// 4. Carrusel de Testimonios Dinámico y LocalStorage
+// 4. Render de Testimonios con HTML Ordenado
 let testimoniosData = JSON.parse(localStorage.getItem('eltonTestimonios')) || [
-  { nombre: "Gonzalo M.", comentario: "Excelente atención por WhatsApp, me resolvieron todo en el día.", puntaje: 5 },
-  { nombre: "Mariela S.", comentario: "Muy claros los requisitos y la transferencia fue rapidísima.", puntaje: 5 },
-  { nombre: "Lucas P.", comentario: "Las cuotas son fijas y sin sorpresas. Muy recomendable.", puntaje: 4 }
+  { nombre: "Gonzalo M.", comentario: "Excelente atención por WhatsApp, me resolvieron todo rápido y sin vueltas.", puntaje: 5 },
+  { nombre: "Mariela S.", comentario: "Muy claros los requisitos y la transferencia fue rápida a mi cuenta.", puntaje: 5 },
+  { nombre: "Lucas P.", comentario: "Las cuotas son fijas y sin sorpresas. Proceso muy transparente.", puntaje: 4 }
 ];
 
 let currentIndex = 0;
@@ -191,15 +195,15 @@ function renderTestimonios() {
   
   track.innerHTML = testimoniosData.map(t => `
     <div class="carousel-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <div class="carousel-card-header">
         <strong>${t.nombre}</strong>
-        <span style="color:#f0a500;">${'⭐'.repeat(t.puntaje)}</span>
+        <span class="carousel-card-stars">${'⭐'.repeat(t.puntaje)}</span>
       </div>
-      <p style="font-size:0.92rem; color:var(--text-muted);">"${t.comentario}"</p>
+      <p>"${t.comentario}"</p>
     </div>
   `).join('');
   
-   actualizarCarruselPosicion();
+  actualizarCarruselPosicion();
 }
 
 function moverCarrusel(direccion) {
@@ -217,7 +221,10 @@ function moverCarrusel(direccion) {
 function actualizarCarruselPosicion() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
-  const cardWidth = track.querySelector('.carousel-card')?.offsetWidth || 300;
+  const card = track.querySelector('.carousel-card');
+  if (!card) return;
+  
+  const cardWidth = card.offsetWidth;
   track.style.transform = `translateX(-${currentIndex * (cardWidth + 20)}px)`;
 }
 
