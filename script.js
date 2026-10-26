@@ -1,5 +1,5 @@
 /**
- * Elton Préstamos - Script Principal, Slideshow de Fondo, Testimonios y Simulador Dinámico por Tramos
+ * Elton Préstamos - Script con Escala Exacta de Intereses y Cuotas
  */
 
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -20,9 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.getElementById('nav-menu');
     if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
+        menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
     }
 
     // 3. Carrusel Interactivo de Testimonios
@@ -62,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Inicializar el Simulador Financiero con Tasas Dinámicas por Tramos
+    // 5. Inicializar el Simulador Financiero con la Escala Exacta Ajustada
     const selMes = document.getElementById('mesInicio');
     const inputMonto = document.getElementById('monto');
     const inputCuotas = document.getElementById('cuotas');
@@ -79,30 +77,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         selMes.value = new Date().getMonth();
 
-        // Reglas de negocio para tasas variables
-        function obtenerTasaAutomatica(monto, cuotas) {
-            if (monto >= 1200000) {
-                if (cuotas >= 8) return 92; // 8 cuotas o más para montos altos
-                return 90;
-            } else if (monto >= 600000) {
-                if (cuotas <= 3) return 78; // 3 cuotas -> 78%
-                if (cuotas <= 5) return 85; // 5 cuotas -> 85%
-                return 88;
-            } else {
-                if (cuotas <= 3) return 75;
-                return 80;
-            }
+        // Escala exacta de porcentajes según las cuotas elegidas
+        function obtenerTasaPorCuotas(cuotas) {
+            if (cuotas <= 3) return 78;      // Hasta 3 cuotas -> 78%
+            if (cuotas <= 5) return 85;      // 4 a 5 cuotas -> 85%
+            if (cuotas <= 7) return 88;      // 6 a 7 cuotas -> 88% (+3%)
+            if (cuotas <= 10) return 93;     // 8 a 10 cuotas -> 93% (+1%)
+            return 95;                       // Más de 10 cuotas
         }
 
         function actualizarSimulacionDinamica() {
             const monto = parseFloat(inputMonto.value) || 0;
             const cuotas = parseInt(inputCuotas.value, 10) || 1;
             
-            const tasaCalculada = obtenerTasaAutomatica(monto, cuotas);
+            const tasaCalculada = obtenerTasaPorCuotas(cuotas);
             inputTasa.value = tasaCalculada;
 
             actualizarMesFinal();
-            renderSimuladorCliente(monto, tasaCalculada, cuotas);
+            renderSimuladorEscalaExacta(monto, tasaCalculada, cuotas);
         }
 
         ['input', 'change'].forEach(ev => {
@@ -143,28 +135,34 @@ function actualizarMesFinal(){
 
 const fmt = n => '$ ' + Math.round(n).toLocaleString('es-AR');
 
-function calcularSistemaFrances(monto, tasaPct, n){
-    const i = tasaPct / 100;
-    let cuota;
-    if(i === 0) cuota = monto / n;
-    else cuota = (monto * i) / (1 - Math.pow(1 + i, -n));
+// CÁLCULO EXACTO: Total a devolver = Capital + Recargo de escala. Cuota = Total / Cuotas.
+function calcularPrestamoEscalaExacta(monto, tasaPct, n){
+    const tasaDecimal = tasaPct / 100;
     
-    let saldo = monto;
+    // Total a devolver directo según la tasa fija de la escala
+    const totalDevolver = monto * (1 + tasaDecimal);
+    
+    // Cuota mensual fija dividida exactamente por las cuotas pedidas
+    const valorCuota = totalDevolver / n;
+    
     const filas = [];
+    let saldoPendiente = totalDevolver;
+    
     for(let k = 1; k <= n; k++){
-        const interes = saldo * i;
-        let capital = cuota - interes;
-        let saldoFinal = saldo - capital;
-        if(k === n){ capital += saldoFinal; saldoFinal = 0; }
-        filas.push({ numero: k, saldoInicial: saldo, capital: capital, cuota: interes + capital, saldoFinal: Math.max(0, saldoFinal) });
-        saldo = saldoFinal;
+        saldoPendiente -= valorCuota;
+        filas.push({
+            numero: k,
+            cuota: valorCuota,
+            saldoFinal: Math.max(0, saldoPendiente)
+        });
     }
-    return { cuotaFija: cuota, filas };
+    
+    return { cuotaFija: valorCuota, totalPagado: totalDevolver, filas };
 }
 
-function renderSimuladorCliente(montoOverride, tasaOverride, cuotasOverride){
+function renderSimuladorEscalaExacta(montoOverride, tasaOverride, cuotasOverride){
     const monto = montoOverride !== undefined ? montoOverride : (parseFloat(document.getElementById('monto').value) || 0);
-    const tasa = tasaOverride !== undefined ? tasaOverride : (parseFloat(document.getElementById('tasa').value) || 85);
+    const tasa = tasaOverride !== undefined ? tasaOverride : (parseFloat(document.getElementById('tasa').value) || 78);
     const n = cuotasOverride !== undefined ? cuotasOverride : (parseInt(document.getElementById('cuotas').value, 10) || 1);
     
     const selMes = document.getElementById('mesInicio');
@@ -175,8 +173,7 @@ function renderSimuladorCliente(montoOverride, tasaOverride, cuotasOverride){
 
     if (monto <= 0 || n <= 0) return;
 
-    const { cuotaFija, filas } = calcularSistemaFrances(monto, tasa, n);
-    const totalPagado = filas.reduce((acc, f) => acc + f.cuota, 0);
+    const { cuotaFija, totalPagado, filas } = calcularPrestamoEscalaExacta(monto, tasa, n);
 
     const summaryEl = document.getElementById('summary');
     if(summaryEl) {
@@ -187,7 +184,7 @@ function renderSimuladorCliente(montoOverride, tasaOverride, cuotasOverride){
                 <div class="v">${fmt(monto)}</div>
             </div>
             <div class="client-card" style="border-left-color: var(--primary-color);">
-                <div class="k">Cuota Mensual Fija (${tasa}% Tasa)</div>
+                <div class="k">Cuota Mensual Fija (${tasa}% Recargo)</div>
                 <div class="v">${fmt(cuotaFija)}</div>
             </div>
             <div class="client-card" style="border-left-color: var(--accent-color);">
@@ -199,9 +196,7 @@ function renderSimuladorCliente(montoOverride, tasaOverride, cuotasOverride){
 
     const cont = document.getElementById('tablaContenedor');
     if(cont) {
-        let totalCuotasSum = 0;
         const filasHtml = filas.map((f, idx) => {
-            totalCuotasSum += f.cuota;
             return `<tr>
                 <td>${f.numero}</td>
                 <td class="mes">${labels[idx] || ''}</td>
@@ -214,14 +209,14 @@ function renderSimuladorCliente(montoOverride, tasaOverride, cuotasOverride){
             <table>
                 <thead>
                     <tr>
-                        <th>Cuota #</th><th>Mes de Vencimiento</th><th>Valor de Cuota</th><th>Saldo Pendiente</th>
+                        <th>Cuota #</th><th>Mes de Vencimiento</th><th>Valor de Cuota</th><th>Saldo Total Restante</th>
                     </tr>
                 </thead>
                 <tbody>${filasHtml}</tbody>
                 <tfoot>
                     <tr>
                         <td colspan="2" class="mes">Total a abonar al finalizar el préstamo</td>
-                        <td>${fmt(totalCuotasSum)}</td>
+                        <td>${fmt(totalPagado)}</td>
                         <td>$ 0</td>
                     </tr>
                 </tfoot>
@@ -233,6 +228,6 @@ function renderSimuladorCliente(montoOverride, tasaOverride, cuotasOverride){
     if(estado) {
         estado.className = 'ok';
         estado.style.color = '#2F6A46';
-        estado.textContent = `Simulación calculada al ${tasa}% mensual con éxito.`;
+        estado.textContent = `Cálculo exacto aplicado (${tasa}% de recargo total en ${n} cuotas).`;
     }
 }
