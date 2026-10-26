@@ -31,7 +31,7 @@
     <div class="container" style="max-width: 960px; margin-top: 40px; margin-bottom: 60px;">
         <header style="border-bottom:1px solid rgba(255,255,255,0.2); margin-bottom:28px; padding-bottom:18px;">
             <h1 style="font-size:clamp(1.8rem,3vw,2.4rem); font-weight:800; color:#ffffff; margin:0 0 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Simulador de Préstamos Personales</h1>
-            <p style="margin:0; color:#e2e8f0; font-weight:500;">Calculá fácilmente la cuota mensual y el total a pagar de tu crédito en pesos con nuestra tasa fija corporativa.</p>
+            <p style="margin:0; color:#e2e8f0; font-weight:500;">Calculá la cuota mensual y el total a pagar de tu crédito con tasas automáticas según el monto y las cuotas elegidas.</p>
         </header>
 
         <section class="panel glass-panel" style="background:rgba(255, 255, 255, 0.95); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:30px; box-shadow:0 12px 32px rgba(0,0,0,0.2); margin-bottom:30px; backdrop-filter: blur(8px);">
@@ -43,8 +43,8 @@
                     <input type="number" id="monto" value="1000000" min="0" step="1000">
                 </div>
                 <div>
-                    <label for="tasa">Tasa mensual fija (%)</label>
-                    <input type="number" id="tasa" value="85" disabled style="background:#e9ecef; color:#495057; font-weight:bold; cursor:not-allowed;" title="Tasa corporativa fija">
+                    <label for="tasa">Tasa mensual automática (%)</label>
+                    <input type="number" id="tasa" value="85" disabled style="background:#e9ecef; color:#495057; font-weight:bold; cursor:not-allowed;" title="Tasa variable según tramo y cuotas">
                 </div>
                 <div>
                     <label for="mesInicio">Mes del primer pago</label>
@@ -56,7 +56,7 @@
                 </div>
                 <div>
                     <label for="cuotas">Cantidad de cuotas (meses)</label>
-                    <input type="number" id="cuotas" value="12" min="1" step="1">
+                    <input type="number" id="cuotas" value="5" min="1" step="1">
                 </div>
                 <div>
                     <label>Último mes de pago</label>
@@ -65,18 +65,18 @@
             </div>
 
             <div class="actions" style="margin-top:25px; display:flex; gap:15px; align-items:center;">
-                <button id="btnCalcular" class="btn btn-secondary"><i class="fa-solid fa-calculator"></i> Calcular Cuotas</button>
+                <button id="btnCalcular" class="btn btn-secondary"><i class="fa-solid fa-calculator"></i> Actualizar Cálculo</button>
                 <span id="estado"></span>
             </div>
         </section>
 
-        <!-- Tarjetas de Resumen para el Cliente -->
+        <!-- Tarjetas de Resumen -->
         <section class="client-summary" id="summary" style="display:none; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px; margin-bottom:30px;"></section>
 
-        <!-- Tabla detallada de cuotas para el cliente -->
+        <!-- Tabla detallada de cuotas -->
         <section class="table-wrap" style="background:rgba(255,255,255,0.95); border:1px solid var(--border-color); border-radius:var(--radius-md); overflow-x:auto; box-shadow:0 12px 32px rgba(0,0,0,0.2);">
             <div id="tablaContenedor">
-                <div class="empty" style="padding:40px; text-align:center; color:var(--text-muted);">Completa los datos y presiona «Calcular Cuotas» para ver el detalle mes a mes.</div>
+                <div class="empty" style="padding:40px; text-align:center; color:var(--text-muted);">Modifica los valores para ver el detalle de cuotas mes a mes.</div>
             </div>
         </section>
 
